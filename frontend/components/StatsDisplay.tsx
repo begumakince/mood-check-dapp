@@ -1,6 +1,7 @@
 interface MoodActivity {
   id: string;
-  mood: number; // 1–5
+  user: string;
+  mood: number; // 1–5 arası
   createdAt: string;
 }
 
@@ -33,7 +34,28 @@ export default function StatsDisplay({ activities }: StatsDisplayProps) {
     }
   });
 
-  // 3️⃣ Mood → Emoji mapping
+  // 3️⃣ 7 Gün Trend Hesapla
+  const now = new Date();
+  const last7 = activities.filter(a => 
+    new Date(a.createdAt) >= new Date(now.getTime() - 7 * 86400000)
+  );
+  const prev7 = activities.filter(a => {
+    const date = new Date(a.createdAt);
+    return (
+      date < new Date(now.getTime() - 7 * 86400000) &&
+      date >= new Date(now.getTime() - 14 * 86400000)
+    );
+  });
+
+  const avg = (list: MoodActivity[]) =>
+    list.length === 0 ? 0 : list.reduce((s, a) => s + a.mood, 0) / list.length;
+
+  const moodTrend = avg(last7) - avg(prev7);
+
+  const trendText =
+    moodTrend > 0 ? "📈 Improving" : moodTrend < 0 ? "📉 Declining" : "➖ Stable";
+
+  // 4️⃣ Mood → Emoji mapping
   const moodEmoji = (mood: number | null) => {
     switch (mood) {
       case 1: return "😞";
@@ -45,7 +67,7 @@ export default function StatsDisplay({ activities }: StatsDisplayProps) {
     }
   };
 
-  // 4️⃣ JSX
+  // 5️⃣ JSX
   return (
     <div style={{ marginTop: "2rem", borderTop: "1px solid black", paddingTop: "1rem" }}>
       <h2>Mood Stats</h2>
@@ -53,6 +75,7 @@ export default function StatsDisplay({ activities }: StatsDisplayProps) {
       <ul>
         <li>😊 Average mood: {averageMood}</li>
         <li>🔥 Most common mood: {moodEmoji(mostCommonMood)}</li>
+        <li>📊 7 Day Trend: {trendText}</li>
         <li>🧠 Total moods logged: {activities.length}</li>
       </ul>
     </div>
