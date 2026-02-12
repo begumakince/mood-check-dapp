@@ -116,3 +116,20 @@ Additional mood categories
 License
 MIT
 
+## AI-Assisted Development
+
+This project was developed with the support of AI-powered coding tools as part of the program requirements.
+
+### Tools Used
+- ChatGPT (OpenAI): Used for brainstorming the project idea, structuring the application, and generating boilerplate frontend code.
+- GitHub Copilot / similar AI assistants: Assisted with component structure and best practices.
+
+### How AI Was Used
+AI tools were used as a productivity aid to:
+- Generate initial project structure ideas
+- Help design React components
+- Improve code readability and documentation
+- Support problem-solving during development
+
+All architectural decisions, integrations, and final code review were done by the developer.
+
