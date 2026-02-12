@@ -1,4 +1,5 @@
 // Mood Check dApp için son ruh hali seçimlerini gösterir
+// Şimdilik blockchain yok, mock data kullanıyoruz
 
 import StatsDisplay from "@/components/StatsDisplay";
 
@@ -6,12 +7,14 @@ interface MoodActivity {
   id: string;
   user: string;
   mood: number; // 1–5 arası
+  createdAt: string;
 }
 
 const mockActivities: MoodActivity[] = [
-  { id: "1", user: "GABC...123", mood: 5 }, // Happy
-  { id: "2", user: "GDEF...456", mood: 3 }, // Neutral
-  { id: "3", user: "GHIJ...789", mood: 1 }, // Sad
+  { id: "1", user: "GABC...123", mood: 5, createdAt: "2026-02-10T10:00:00Z" }, // Happy
+  { id: "2", user: "GDEF...456", mood: 3, createdAt: "2026-02-09T12:00:00Z" }, // Neutral
+  { id: "3", user: "GHIJ...789", mood: 1, createdAt: "2026-02-05T15:00:00Z" }, // Sad
+  { id: "4", user: "GKLM...012", mood: 4, createdAt: "2026-02-03T18:00:00Z" }, // Happy/High
 ];
 
 export default function ActivityFeed() {
@@ -29,7 +32,11 @@ export default function ActivityFeed() {
               ? "Sad"
               : activity.mood === 3
               ? "Neutral"
-              : "Happy"}
+              : activity.mood === 5
+              ? "Happy"
+              : activity.mood === 4
+              ? "Happy"
+              : "–"}
           </li>
         ))}
       </ul>
@@ -39,4 +46,3 @@ export default function ActivityFeed() {
     </div>
   );
 }
-
