@@ -6,27 +6,30 @@ interface MoodActivity {
 }
 
 interface StatsDisplayProps {
-  activities: MoodActivity[];
+  activities?: MoodActivity[]; // 👈 optional yaptık
 }
 
-export default function StatsDisplay({ activities }: StatsDisplayProps) {
+export default function StatsDisplay({ activities = [] }: StatsDisplayProps) {
+  const safeActivities = activities;
+
   // 1️⃣ Ortalama Mood
   const averageMood =
-    activities.length === 0
+    safeActivities.length === 0
       ? "0"
       : (
-          activities.reduce((sum, a) => sum + a.mood, 0) /
-          activities.length
+          safeActivities.reduce((sum, a) => sum + a.mood, 0) /
+          safeActivities.length
         ).toFixed(1);
 
   // 2️⃣ En sık mood
   const moodCounts: Record<number, number> = {};
-  activities.forEach(a => {
+  safeActivities.forEach(a => {
     moodCounts[a.mood] = (moodCounts[a.mood] || 0) + 1;
   });
 
   let mostCommonMood: number | null = null;
   let maxCount = 0;
+
   Object.entries(moodCounts).forEach(([mood, count]) => {
     if (count > maxCount) {
       mostCommonMood = Number(mood);
@@ -34,12 +37,14 @@ export default function StatsDisplay({ activities }: StatsDisplayProps) {
     }
   });
 
-  // 3️⃣ 7 Gün Trend Hesapla
+  // 3️⃣ 7 Günlük Trend
   const now = new Date();
-  const last7 = activities.filter(a => 
+
+  const last7 = safeActivities.filter(a =>
     new Date(a.createdAt) >= new Date(now.getTime() - 7 * 86400000)
   );
-  const prev7 = activities.filter(a => {
+
+  const prev7 = safeActivities.filter(a => {
     const date = new Date(a.createdAt);
     return (
       date < new Date(now.getTime() - 7 * 86400000) &&
@@ -55,7 +60,7 @@ export default function StatsDisplay({ activities }: StatsDisplayProps) {
   const trendText =
     moodTrend > 0 ? "📈 Improving" : moodTrend < 0 ? "📉 Declining" : "➖ Stable";
 
-  // 4️⃣ Mood → Emoji mapping
+  // 4️⃣ Emoji map
   const moodEmoji = (mood: number | null) => {
     switch (mood) {
       case 1: return "😞";
@@ -76,7 +81,7 @@ export default function StatsDisplay({ activities }: StatsDisplayProps) {
         <li>😊 Average mood: {averageMood}</li>
         <li>🔥 Most common mood: {moodEmoji(mostCommonMood)}</li>
         <li>📊 7 Day Trend: {trendText}</li>
-        <li>🧠 Total moods logged: {activities.length}</li>
+        <li>🧠 Total moods logged: {safeActivities.length}</li>
       </ul>
     </div>
   );

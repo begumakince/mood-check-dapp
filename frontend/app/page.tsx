@@ -1,22 +1,30 @@
-import WalletConnect from "../components/WalletConnect";
-import MoodButtons from "../components/MoodButtons";
-import StatsDisplay from "../components/StatsDisplay";
+"use client";
+
+import WalletConnect from "@/components/WalletConnect";
+import MoodButtons from "@/components/MoodButtons";
+import StatsDisplay from "@/components/StatsDisplay";
 import ActivityFeed from "@/components/ActivityFeed";
 
-
-export default function HomePage() {
+export default function Home() {
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>Mood Check DApp</h1>
-
-      <p>
-        Welcome! This is an AI-assisted Web3 project built on Stellar Testnet.
-      </p>
+    <main className="min-h-screen bg-gray-100 flex flex-col items-center p-8">
+      <h1 className="text-3xl font-bold mb-6">
+        Mood Check dApp 🙂
+      </h1>
 
       <WalletConnect />
-      <MoodButtons />
-      <StatsDisplay />
-      <ActivityFeed />
+
+      <div className="mt-6">
+        <MoodButtons />
+      </div>
+
+      <div className="mt-10 w-full max-w-md">
+        <StatsDisplay />
+      </div>
+
+      <div className="mt-10 w-full max-w-md">
+        <ActivityFeed />
+      </div>
     </main>
   );
 }
