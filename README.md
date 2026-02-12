@@ -122,7 +122,7 @@ This project was developed with the support of AI-powered coding tools as part o
 
 ### Tools Used
 - ChatGPT (OpenAI): Used for brainstorming the project idea, structuring the application, and generating boilerplate frontend code.
-- GitHub Copilot / similar AI assistants: Assisted with component structure and best practices.
+- GitHub Copilot / similar AI assistants: Assisted with smart contract logic and Soroban integration.
 
 ### How AI Was Used
 AI tools were used as a productivity aid to:
@@ -131,5 +131,7 @@ AI tools were used as a productivity aid to:
 - Improve code readability and documentation
 - Support problem-solving during development
 
-All architectural decisions, integrations, and final code review were done by the developer.
+*All architectural decisions, integrations, and final code reviews were performed by the developer.*
+
+---
 
