@@ -1,5 +1,6 @@
 import WalletConnect from "../components/WalletConnect";
 import MoodButtons from "../components/MoodButtons";
+import StatsDisplay from "../components/StatsDisplay";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
 
       <WalletConnect />
       <MoodButtons />
+      <StatsDisplay />
     </main>
   );
 }
